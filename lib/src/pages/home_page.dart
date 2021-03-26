@@ -9,6 +9,7 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    peliculasProvider.getPopulares();
     return Scaffold(
       appBar: AppBar(
         centerTitle: false,
@@ -27,6 +28,9 @@ class HomePage extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: <Widget>[
             _swiperTarjetas(),
+            SizedBox(
+              height: 10.0,
+            ),
             _footer(context),
           ],
         ),
@@ -58,20 +62,25 @@ class HomePage extends StatelessWidget {
             padding: EdgeInsets.only(left: 75.0),
             child: Text(
               'Peliculas más populares',
-              style: Theme.of(context).textTheme.headline5,
+              style: TextStyle(
+                color: Colors.black87,
+                fontSize: 20,
+                fontWeight: FontWeight.w600,
+              ),
             ),
           ),
           SizedBox(
-            height: 5.0,
+            height: 15.0,
           ),
-          FutureBuilder(
-            future: peliculasProvider.getPopulares(),
+          StreamBuilder(
+            stream: peliculasProvider.popularesStream,
             builder: (BuildContext context, AsyncSnapshot snapshot) {
               //print(snapshot.data);
               //snapshot.data.forEach((p) => print(p.title));
               if (snapshot.hasData) {
                 return MovieHorizontal(
                   peliculas: snapshot.data,
+                  siguientePagina: peliculasProvider.getPopulares,
                 );
               } else {
                 return CircularProgressIndicator();

@@ -16,6 +16,7 @@ class Peliculas {
 }
 
 class Pelicula {
+  String uniqueId;
   int voteCount;
   int id;
   bool video;
@@ -70,6 +71,14 @@ class Pelicula {
       return 'https://www.elektroinstrumentos.com/wp-content/uploads/2020/05/imagen-no-disponible.png';
     } else {
       return 'https://image.tmdb.org/t/p/w500/$posterPath';
+    }
+  }
+
+  getBackgroundImg() {
+    if (posterPath == null) {
+      return 'https://www.elektroinstrumentos.com/wp-content/uploads/2020/05/imagen-no-disponible.png';
+    } else {
+      return 'https://image.tmdb.org/t/p/w500/$backdropPath';
     }
   }
 }
